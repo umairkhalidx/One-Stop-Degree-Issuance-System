@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Image = iTextSharp.text.Image;
 
 public partial class DesignLayer_Student_studentTrackActivity : System.Web.UI.Page
 {
@@ -79,14 +80,19 @@ public partial class DesignLayer_Student_studentTrackActivity : System.Web.UI.Pa
     protected void generate_Click(object sender, EventArgs e)
     {
         Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-        PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
-
+        PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
 
         pdfDoc.Open();
 
+        // Create a font for the paragraph
+        BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+        Font font = new Font(baseFont, 18, Font.BOLD, BaseColor.BLACK);
 
-        Paragraph title = new Paragraph("NATIONAL UNIVERSITY OF COMPUTING AND EMERGING SCIENCES\n\n\n");
+        // Create a paragraph with the title content
+        Paragraph title = new Paragraph("NATIONAL UNIVERSITY OF COMPUTING AND EMERGING SCIENCES\n\n\n", font);
+        // Set alignment to center
         title.Alignment = Element.ALIGN_CENTER;
+
         pdfDoc.Add(title);
 
         Paragraph subtitle = new Paragraph("DEGREE CERTIFICATE\n\n\n");
